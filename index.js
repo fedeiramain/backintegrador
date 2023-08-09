@@ -1,6 +1,7 @@
 
 
 ( async () => {
+    require('dotenv').config()
     const http = require('http')
     const path = require('path')
 
@@ -9,9 +10,11 @@
     const app = express()
 
     const mongoose = require('mongoose')
+    const ChatMsg = require('./models/chats.model')
 
     try {
-        await mongoose.connect("mongodb+srv://federicoiramain:MKpKH09v60kZnbvw@cluster0.n23bk6a.mongodb.net/?retryWrites=true&w=majority")
+        const uri = `mongodb+srv://${process.env.User}:${process.env.Password}@cluster0.n23bk6a.mongodb.net/?retryWrites=true&w=majority`
+        await mongoose.connect(uri)
         console.log("se a Conectado")
     } catch(e) {
         console.log(e)
@@ -59,6 +62,7 @@
         socket.emit('chat-messages', messages)
 
         socket.on('chat-message', (msg) => {
+            const message = new ChatMsg({msg})
             messages.push(msg)
             console.log(msg)
             socket.broadcast.emit('chat-message', msg)
