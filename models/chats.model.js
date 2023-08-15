@@ -1,18 +1,9 @@
 const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
-    user: {
-        type: String,
-        required: true
-    },
-    message: {
-        type: String,
-        required: true
-    },
-    time: {
-        type: Number,
-        default: Date.now()
-    }
+    user: String,
+    text: String,
+    datetime: String
 })
 
 const chatModel = model('messages', schema)

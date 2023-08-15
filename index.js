@@ -1,85 +1,92 @@
 
 
-( async () => {
+(async () => {
     require('dotenv').config()
     const http = require('http')
     const path = require('path')
 
     const express = require('express')
     const handlebars = require('express-handlebars')
-    const app = express()
-
+    
+    const { Server } = require('socket.io')
     const mongoose = require('mongoose')
-    const ChatMsg = require('./models/chats.model')
+    
+    const chatMsg = require('./managers/ChatManager')
+    const prodMng = require('./managers/ProductManager')
+
 
     try {
-        const uri = `mongodb+srv://${process.env.User}:${process.env.Password}@cluster0.n23bk6a.mongodb.net/?retryWrites=true&w=majority`
+        const uri = `mongodb+srv://${process.env.User}:${process.env.Password}@cluster0.n23bk6a.mongodb.net/ecommerce?retryWrites=true&w=majority`
         await mongoose.connect(uri)
         console.log("se a Conectado")
-    } catch(e) {
+
+        const app = express()
+        const server = http.createServer(app)
+        const io = new Server(server)
+
+        app.use(express.urlencoded({ extended: true }))
+        app.use(express.json())
+        app.use('/static', express.static(path.join(__dirname + '/public')))
+
+        app.engine('handlebars', handlebars.engine())
+        app.set('views', path.join(__dirname, 'views'))
+        app.set('view engine', 'handlebars')
+
+
+        app.get('/', (req, res) => {
+            res.render('home')
+        })
+
+        app.get('/products', (req, res) => {
+            res.render('products')
+        })
+
+        app.get('/chats', (req, res) => {
+            res.render('chat')
+        })
+
+
+        io.on('connection', async (socket) => {
+            console.log(`${socket.id}`)
+
+            socket.emit('event', "hola front")
+            socket.on('event', (res) => {
+                console.log(res)
+            })
+
+            const messages = await chatMsg.getAll()
+            socket.emit('chat-messages', messages)
+
+            socket.on('chat-message', async (msg) => {
+                messages.push(msg)
+                console.log(msg)
+                await chatMsg.create(msg)
+                socket.broadcast.emit('chat-message', msg)
+            })
+
+            let users = {}
+
+            socket.on('user', ({ user }) => {
+                users[socket.id] = user
+                socket.broadcast.emit('user', { user })
+            })
+
+            const prod = await prodMng.getProducts()
+            console.log(prod)
+            socket.emit('prod', prod)
+
+            socket.on('disconnect', () => {
+                console.log("disconnected")
+            })
+        })
+
+
+        server.listen(3000, () => {
+            console.log("ok")
+        })
+    } catch (e) {
         console.log(e)
         console.log("no conectado")
     }
-    
-    const { Server } = require('socket.io')
-    const server = http.createServer(app)
-    const io = new Server(server)
 
-    app.use(express.urlencoded({ extended: true }))
-    app.use(express.json())
-    app.use('/static', express.static(path.join(__dirname + '/public')))
-
-    app.engine('handlebars', handlebars.engine())
-    app.set('views', path.join(__dirname, 'views'))
-    app.set('view engine', 'handlebars')
-
-
-    app.get('/', (req, res) => {
-        res.render('home')
-    })
-
-    app.get('/products', (req, res) => {
-        res.render('products')
-    })
-
-    app.get('/chats', (req, res) => {
-        res.render('chat')
-    })
-
-
-    const messages = []
-    const users = {}
-
-    io.on('connection', (socket) => {
-        console.log(`${socket.id}`)
-
-        socket.emit('event', "hola front")
-        socket.on('event', (res) => {
-            console.log(res)
-        })
-
-
-        socket.emit('chat-messages', messages)
-
-        socket.on('chat-message', (msg) => {
-            const message = new ChatMsg({msg})
-            messages.push(msg)
-            console.log(msg)
-            socket.broadcast.emit('chat-message', msg)
-        })
-
-        socket.on('user', ({ user }) => {
-            users[socket.id] = user
-            socket.broadcast.emit('user', { user })
-        })
-
-        socket.on('disconnect', () => {
-            console.log("disconnected")
-        })
-    })
-
-
-    server.listen(3000, () => {
-        console.log("ok")
-    })
 })()

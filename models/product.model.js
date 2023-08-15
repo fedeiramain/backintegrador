@@ -4,10 +4,8 @@ const schema = new Schema({
     title: String,
     description: String,
     price: Number,
-    keywords: [String],
-    createDate: { type: Number, default: Date.now() }
 })
 
-const prodcutsmodel = model('products', schema)
+const productsModel = model('products', schema)
 
-module.exports = prodcutsmodel
+module.exports = productsModel

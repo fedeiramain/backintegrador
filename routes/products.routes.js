@@ -1,17 +1,15 @@
 const { Router } = require('express')
-const ProductManager = require('../managers/ProductManager')
-const productModel = require('../models/product.model')
+const productManager = require('../managers/ProductManager')
 
-const productManager = new ProductManager('products.json')
 
 const router = Router()
 
-router.get("/", async (req, res)=> {
+router.get("/products", async (req, res)=> {
     const {search, min, max, limit} = req.query
     // const datos = await productManager.getAll()
-    const datos = await productModel.find()
+    const datos = await productManager.getProducts()
     let filtrados = datos
-
+    console.log(filtrados)
 
     if(search) {
         filtrados = filtrados.filter(p => p.title.includes(search) || p.code.includes(search))
@@ -25,13 +23,14 @@ router.get("/", async (req, res)=> {
         filtrados = filtrados.slice(0, +limit)
     }
 
+
     res.send(filtrados)
 })
 
-router.get("/:id", async (req,res)=> {
+router.get("/products/:id", async (req,res)=> {
     const id = req.params.id 
     // const datos = await productManager.getProducts(id)
-    const datos = await productModel.findOne({ _id: id })
+    const datos = await productManager.getById(id)
     
     let productos = datos
 
@@ -46,7 +45,7 @@ router.get("/:id", async (req,res)=> {
     return
 })
 
-router.post("/", async (req, res) => {
+router.post("/products/", async (req, res) => {
     const { body } = req
 
     const product = await productManager.create(body)
@@ -54,7 +53,7 @@ router.post("/", async (req, res) => {
     res.send({status: "cargado con exito", product: product })
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/products/:id", async (req, res) => {
     const { body } = req
     const id = req.params.id
 
@@ -62,14 +61,14 @@ router.put("/:id", async (req, res) => {
         res.sendStatus(404)
         return
     } else {
-        const product = await productManager.save(id, body)
+        const product = await ProductManagerroductManager.save(id, body)
 
         res.sendStatus(202).send(product)
     }
 
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/products/:id", async (req, res) => {
     const { id } = req.params
     if (!await productManager.getById(id)) {
         res.sendStatus(404)
