@@ -9,6 +9,12 @@ class ProductManager {
         return productos
     }
 
+    async getAllPaged() {
+        const products = await productsModel.paginate({}, { limit: 4, page: 2, lean: true })
+
+        return products
+      }
+
     async create(product) {
         
         const newProduct = await productsModel.create(product)

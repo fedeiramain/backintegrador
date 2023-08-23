@@ -1,10 +1,26 @@
 const { Router } = require('express')
-const productManager = require('../managers/ProductManager')
+const productManager = require('../../managers/ProductManager')
 
 
-const router = Router()
+const routes = Router()
 
-router.get("/products", async (req, res)=> {
+// routes.get('/', async(req, res) => {
+//     const { page = 1, size = 4 } = req.query
+//   const product = await productManager.getAllPaged()
+//   console.log(product)
+
+//   pageInfo.prevLink = pageInfo.hasPrevPage ? `http://localhost:3000/?page=${pageInfo.prevPage}&size=${size}` : ''
+//   pageInfo.nextLink = pageInfo.hasNextPage ? `http://localhost:3000/?page=${pageInfo.nextPage}&size=${size}` : ''
+
+//   res.render('products', {
+//     products,
+//     title: "hola"
+//   })
+// })
+
+
+
+routes.get("/", async (req, res)=> {
     const {search, min, max, limit} = req.query
     // const datos = await productManager.getAll()
     const datos = await productManager.getProducts()
@@ -27,7 +43,7 @@ router.get("/products", async (req, res)=> {
     res.send(filtrados)
 })
 
-router.get("/products/:id", async (req,res)=> {
+routes.get("/:id", async (req,res)=> {
     const id = req.params.id 
     // const datos = await productManager.getProducts(id)
     const datos = await productManager.getById(id)
@@ -45,7 +61,7 @@ router.get("/products/:id", async (req,res)=> {
     return
 })
 
-router.post("/products/", async (req, res) => {
+routes.post("/", async (req, res) => {
     const { body } = req
 
     const product = await productManager.create(body)
@@ -53,7 +69,7 @@ router.post("/products/", async (req, res) => {
     res.send({status: "cargado con exito", product: product })
 })
 
-router.put("/products/:id", async (req, res) => {
+routes.put("/:id", async (req, res) => {
     const { body } = req
     const id = req.params.id
 
@@ -68,7 +84,7 @@ router.put("/products/:id", async (req, res) => {
 
 })
 
-router.delete("/products/:id", async (req, res) => {
+routes.delete("/:id", async (req, res) => {
     const { id } = req.params
     if (!await productManager.getById(id)) {
         res.sendStatus(404)
@@ -81,4 +97,4 @@ router.delete("/products/:id", async (req, res) => {
 
 })
 
-module.exports = router
+module.exports = routes

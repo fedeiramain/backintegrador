@@ -37,7 +37,7 @@
             res.render('home')
         })
 
-        app.get('/products', (req, res) => {
+        app.get('/products', async (req, res) => {
             res.render('products')
         })
 
@@ -70,10 +70,10 @@
                 users[socket.id] = user
                 socket.broadcast.emit('user', { user })
             })
-
-            const prod = await prodMng.getProducts()
-            console.log(prod)
-            socket.emit('prod', prod)
+            
+            const { docs, ...info} = await prodMng.getAllPaged()
+            console.log(docs)
+            socket.emit('prod', { docs, ...info})
 
             socket.on('disconnect', () => {
                 console.log("disconnected")
