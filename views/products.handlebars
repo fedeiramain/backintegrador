@@ -1,6 +1,22 @@
 <h1>Home</h1>
-
+<div class="show-page">
+    {{#if info.hasPrevPage}}
+    <a href={{info.prevLink}}>Anterior</a>
+    {{/if}}
+    <span> {{info.page}}</span>
+    {{#if info.hasNextPage}}
+    <a href={{info.nextLink}}>Siguiente</a>
+    {{/if}}
+</div>
 
 
 <div id="products">
+    {{#each docs }}
+    <div>
+        <h3 class="name-product">{{ this.title }}</h3>
+        <p class="desc-product">{{ this.description }}</p>
+        <span class="precio-product">{{ this.price }}</span>
+        <button onclick="addtoCart({{ this._id }})" class="addbutton">Agregar al carrito</button>
+    </div>
+    {{/each}}
 </div>
