@@ -1,18 +1,20 @@
-<h1>Home</h1>
-<div class="show-page">
+<h1 class="title-home">Home</h1>
+<div class="pages">
+    <div class="show-pages">
     {{#if info.hasPrevPage}}
-    <a href={{info.prevLink}}>Anterior</a>
+    <a href={{info.prevLink}} class="prev-page">Anterior</a>
     {{/if}}
-    <span> {{info.page}}</span>
+    <span class="this-page"> {{info.page}}</span>
     {{#if info.hasNextPage}}
-    <a href={{info.nextLink}}>Siguiente</a>
+    <a href={{info.nextLink}} class="next-page">Siguiente</a>
     {{/if}}
+</div>
 </div>
 
 
-<div id="products">
+<div id="products" class="products">
     {{#each docs }}
-    <div>
+    <div class="product">
         <h3 class="name-product">{{ this.title }}</h3>
         <p class="desc-product">{{ this.description }}</p>
         <span class="precio-product">{{ this.price }}</span>

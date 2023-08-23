@@ -31,17 +31,13 @@
         app.set('views', path.join(__dirname, 'views'))
         app.set('view engine', 'handlebars')
 
-        app.get('/', (req, res) => {
-            res.render('home')
-        })
-
         app.get('/products', async (req, res) => {
             const { page } = req.query
             const { docs, ...info} = await prodMng.getAllPaged(page)
 
             info.prevLink = info.hasPrevPage ? `http://localhost:3000/products/?page=${info.prevPage}` : ''
             info.nextLink = info.hasNextPage ? `http://localhost:3000/products/?page=${info.nextPage}` : ''
-            console.log(info)
+            // console.log(info)
             res.render('products', {
                docs,
                info
