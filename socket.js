@@ -1,5 +1,5 @@
 const chatMsg = require('./managers/ChatManager')
-const prodMng = require('./managers/ProductManager')
+// const prodMng = require('./managers/ProductManager')
 
 async function socketManager(socket) {
     console.log(`${socket.id}`)
@@ -29,6 +29,7 @@ async function socketManager(socket) {
     // const { docs, ...info} = await prodMng.getAllPaged()
     // console.log(docs)
     // socket.emit('prod', { docs, ...info})
+
 
     socket.on('disconnect', () => {
         console.log("disconnected")

@@ -9,6 +9,10 @@ socket.on('products', (res) => {
 
 const products = document.querySelector('#products')
 
+ function addToCart(res) {
+ console.log(res)
+}
+
 // products.innerHTML = ""
 
 // const addProducts = ({ docs, ...info}) => {
@@ -31,12 +35,6 @@ const products = document.querySelector('#products')
 //     })}
    
 // }
-
-const addToCart = (prodId) => {
-    socket.emit('addCart', { prodId })
-}
-
-
 
 // socket.on('prod', ({ docs, ...info}) => {
 //     addProducts({ docs, ...info})
