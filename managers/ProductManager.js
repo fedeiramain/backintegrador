@@ -23,7 +23,7 @@ class ProductManager {
     }
 
     async getById(id) {
-        const product = await productsModel.find({ _id: id })
+        const product = await productsModel.findOne({ _id: id })
 
         return product
     }

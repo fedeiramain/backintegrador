@@ -6,12 +6,14 @@
   <body>
     <nav>
       <ul class="menu">
-        <li class="menu-item"><a href="/products/?page=1">Productos</a></li>
+        <li class="menu-item"><a href="/?page=1">Productos</a></li>
         <li class="menu-item"><a href="/chats">Chat</a></li>
-        <li class="menu-item"><a href="">Cart</a></li>
+        <li class="menu-item"><a href="/cart">Cart</a></li>
       </ul>
     </nav>
-          {{{body}}}
+    <main>
+       {{{body}}}
+    </main>
  
     <script src="socket.io/socket.io.js"></script>
     <script src="./static/index.js"></script>

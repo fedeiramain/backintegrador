@@ -1,4 +1,6 @@
+const CartManager = require('./managers/CartManager')
 const chatMsg = require('./managers/ChatManager')
+const ProductManager = require('./managers/ProductManager')
 // const prodMng = require('./managers/ProductManager')
 
 async function socketManager(socket) {
@@ -25,12 +27,16 @@ async function socketManager(socket) {
         users[socket.id] = user
         socket.broadcast.emit('user', { user })
     })
-    
-    // const { docs, ...info} = await prodMng.getAllPaged()
-    // console.log(docs)
-    // socket.emit('prod', { docs, ...info})
 
+    // socket.on('addCart', async (res)=> {
+    //     // console.log(res)
+    //     const prodAdd = await ProductManager.getById(res)
+    //     socket.emit('inCart', prodAdd)
+    //     console.log(title)
 
+    //     // const newCart = await CartManager.createCart("Fede")
+        
+    // })
     socket.on('disconnect', () => {
         console.log("disconnected")
     })

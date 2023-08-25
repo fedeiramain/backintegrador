@@ -4,9 +4,6 @@ const chatRoom = document.querySelector('#convers')
 const inputElement = document.querySelector('#input')
 
 
-chatRoom.innerHTML = ""
-
-
 const appendMsg = (user, time, msg) => {
   const div = document.createElement('div')
   div.classList.add('uk-width-1-1')
@@ -31,7 +28,7 @@ let currentMessages = []
 
 socket.on('chat-messages', (messages) => {
   currentMessages = messages
-  console.log(currentMessages)
+  // console.log(currentMessages)
 
 })
 

@@ -11,9 +11,10 @@ const home = Router()
 
 const prodMng = require('../managers/ProductManager')
 
-home.get('/products', async (req, res) => {
+home.get('/', async (req, res) => {
     const { page } = req.query
     const { docs, ...info} = await prodMng.getAllPaged(page)
+    // console.log(docs)
     let resp;
     if(docs) {
         resp = {
@@ -39,17 +40,29 @@ home.get('/products', async (req, res) => {
           }
     }
 
-    console.log(info)
+    info.prevLink = info.hasPrevPage ? `http://localhost:3000/?page=${info.prevPage}` : ''
+    info.nextLink = info.hasNextPage ? `http://localhost:3000/?page=${info.nextPage}` : ''
+  
 
-    info.prevLink = info.hasPrevPage ? `http://localhost:3000/products/?page=${info.prevPage}` : ''
-    info.nextLink = info.hasNextPage ? `http://localhost:3000/products/?page=${info.nextPage}` : ''
-    // console.log(info)
-   
     res.render('products', {
        docs,
        info
     })
 })
+
+home.get('/:id', async (req, res)=> {
+    const id = req.params.id
+
+    const { title, price, description, _id } = await prodMng.getById(id)
+
+    res.render('detail', {
+        title: title,
+        price: price,
+        desc: description,
+        id: _id
+    })
+})
+
 
 home.get('/chats', (req, res) => {
     res.render('chat')

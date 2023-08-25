@@ -18,7 +18,8 @@
         <h3 class="name-product">{{ this.title }}</h3>
         <p class="desc-product">{{ this.description }}</p>
         <span class="precio-product">{{ this.price }}</span>
-        <button onclick="addtoCart({{ this._id }})" class="addbutton" id="butonAd">Agregar al carrito</button>
+        <a href="/{{this._id}}">Ver mas</a>
+        
     </div>
     {{/each}}
 </div>
