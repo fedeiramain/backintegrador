@@ -77,7 +77,7 @@ routes.put("/:id", async (req, res) => {
         res.sendStatus(404)
         return
     } else {
-        const product = await ProductManagerroductManager.save(id, body)
+        const product = await ProductManager.save(id, body)
 
         res.sendStatus(202).send(product)
     }

@@ -2,12 +2,16 @@ const chatModel = require('../models/chats.model')
 
 class ChatManager {
 
-  getAll() {
-    return chatModel.find().lean()
+  async getAll() {
+    const allMsg = await chatModel.find().lean()
+
+    return allMsg
   }
 
-  create(msg) {
-    return chatModel.create(msg)
+  async create(msg) {
+    const create = await chatModel.create(msg)
+
+    return create
   }
 }
 

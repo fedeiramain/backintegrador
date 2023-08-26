@@ -2,7 +2,7 @@
 
 
 (async () => {
-    require('dotenv').config()
+    require('dotenv').config({path: './.env'})
     const http = require('http')
     const path = require('path')
 
@@ -12,7 +12,6 @@
     const { Server } = require('socket.io')
     const mongoose = require('mongoose')
     
-    const prodMng = require('./managers/ProductManager')
     const { home } = require('./routes/index')
 
     try {
@@ -35,6 +34,9 @@
 
         app.use('/', home)
 
+        app.get('/chats', (req, res) => {
+            res.render('chat')
+        })
     
         io.on('connection', socketManager)
 

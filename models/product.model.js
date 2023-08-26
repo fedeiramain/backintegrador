@@ -5,7 +5,7 @@ const paginate = require('mongoose-paginate-v2')
 const schema = new Schema({
     title: String,
     description: String,
-    price: Number,
+    price: Number
 })
 
 schema.plugin(paginate)

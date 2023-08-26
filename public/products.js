@@ -1,9 +1,4 @@
 console.log("products")
-socket.on('products', (res) => {
-    console.log(res)
-    socket.emit('products', "hola products")
-})
-
 
 const products = document.querySelector('#products')
 
