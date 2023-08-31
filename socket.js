@@ -28,10 +28,10 @@ async function socketManager(socket) {
 
     socket.on('addCart', async (res)=> {
         // console.log(res)
-        const prodAdd = await ProductManager.getById(res)
-        socket.emit('inCart', prodAdd)
+        const { title, price} = await ProductManager.getById(res)
+         console.log(title, price)
+        socket.emit('inCart', { title, price})
 
-        
     })
     
     socket.on('disconnect', () => {

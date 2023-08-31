@@ -1,4 +1,10 @@
 <h1>My Cart</h1>
 <div id="inCart" class="inCart">
+    {{#each inCart }}
+    <div>
+        <h4>El Usuario <span>{{ this.user }}</span> compro:</h4>
+        <p>{{ this.products }}</p>
+    </div>
+    {{/each}}
   
 </div>

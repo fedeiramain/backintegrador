@@ -10,12 +10,14 @@ api.use('/', ProductsRoute)
 const home = Router()
 
 const prodMng = require('../managers/ProductManager')
+const CartManager = require('../managers/CartManager')
+
 
 home.get('/', async (req, res) => {
     const { page } = req.query;
-
+    const user = req.session.user;
     const { docs, ...info} = await prodMng.getAllPaged(page);
-    // console.log(docs)
+   
     let resp;
 
     if(docs) {
@@ -48,13 +50,15 @@ home.get('/', async (req, res) => {
 
     res.render('products', {
        docs,
-       info
+       info, 
+       user: user
+    
     })
 });
 
-home.get('/product/:id', async (req, res)=> {
-    const id = req.params.id;
-
+home.get("/product/:id", async (req,res)=> {
+    const id = req.params.id 
+    
     if(!id) {
         res.sendStatus(404)
         return
@@ -67,6 +71,38 @@ home.get('/product/:id', async (req, res)=> {
         price: price,
         desc: description,
         id: _id
+    })
+})
+
+home.get('/login', (req, res) => {
+
+    res.render('login')
+})
+
+home.post('/login', (req, res)=> {
+    const { user } = req.body
+
+    req.session.user = {
+        name: user,
+        role: "admin"
+    }
+
+    req.session.save((err)=> {
+        if(!err) {
+            res.redirect('/')
+        } 
+    })
+    
+})
+
+home.get('/cart', async (req, res)=> {
+    const inCart = await CartManager.getAll()
+    console.log(inCart)
+    const user = req.session.user;
+
+    res.render('cart', {
+        inCart, 
+        user: user
     })
 })
 

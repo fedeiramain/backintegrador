@@ -1,3 +1,4 @@
+
 console.log("chats")
 
 const chatRoom = document.querySelector('#convers')
@@ -32,26 +33,30 @@ socket.on('chat-messages', (messages) => {
 
 })
 
-Swal.fire({
-  title: 'Ingresa tu nombre',
-  input: 'text',
-  inputAttributes: {
-    autocapitalize: 'off'
-  },
-  confirmButtonText: 'Enviar',
-  preConfirm: (username) => {
-    if (!username) {
-      Swal.showValidationMessage(
-        `El usuario no puede estar en blanco`
-      )
-      return
-    }
+// Swal.fire({
+//   title: 'Ingresa tu nombre',
+//   input: 'text',
+//   inputAttributes: {
+//     autocapitalize: 'off'
+//   },
+//   confirmButtonText: 'Enviar',
+//   preConfirm: (username) => {
+//     if (!username) {
+//       Swal.showValidationMessage(
+//         `El usuario no puede estar en blanco`
+//       )
+//       return
+//     }
     
-    return username
-  },
-  allowOutsideClick: false
-}).then(({ value }) => {
-  username = value
+//     return username
+//   },
+//   allowOutsideClick: false
+// }).then(({ value }) => {
+  const cookies = parseCookies()
+
+  if(cookies.user) {
+    console.log(cookies.user)
+  username = cookies.user
   socket.emit('user', { user: username })
 
   for (const { user, datetime, text } of currentMessages) {
@@ -87,4 +92,18 @@ Swal.fire({
     target.value = ""
     appendMsg(username, fecha.toLocaleTimeString('en-US'), value)
   })
-})
+}
+
+
+function parseCookies() {
+  // user=lalo; apellido=ramos
+  return document.cookie
+    .split(';')
+    .reduce((obj, cookie) => {
+      const keyValue = cookie.split('=')
+      return {
+        ...obj,
+        [keyValue[0].trim()]: keyValue[1]
+      }
+    }, {})
+}

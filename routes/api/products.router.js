@@ -4,22 +4,6 @@ const productManager = require('../../managers/ProductManager')
 
 const routes = Router()
 
-// routes.get('/', async(req, res) => {
-//     const { page = 1, size = 4 } = req.query
-//   const product = await productManager.getAllPaged()
-//   console.log(product)
-
-//   pageInfo.prevLink = pageInfo.hasPrevPage ? `http://localhost:3000/?page=${pageInfo.prevPage}&size=${size}` : ''
-//   pageInfo.nextLink = pageInfo.hasNextPage ? `http://localhost:3000/?page=${pageInfo.nextPage}&size=${size}` : ''
-
-//   res.render('products', {
-//     products,
-//     title: "hola"
-//   })
-// })
-
-
-
 routes.get("/", async (req, res)=> {
     const {search, min, max, limit} = req.query
     // const datos = await productManager.getAll()
@@ -43,23 +27,6 @@ routes.get("/", async (req, res)=> {
     res.send(filtrados)
 })
 
-routes.get("/:id", async (req,res)=> {
-    const id = req.params.id 
-    // const datos = await productManager.getProducts(id)
-    const datos = await productManager.getById(id)
-    
-    let productos = datos
-
-    if(isNaN(id)){
-        res.send({status: "(id) debe ser Number"})
-    }
-    if(productos = productos.filter(p => p.id == id)) {
-        res.send(productos)
-    } else {
-        res.send({status: "(id) no existe el producto"})
-    }
-    return
-})
 
 routes.post("/", async (req, res) => {
     const { body } = req
@@ -77,7 +44,7 @@ routes.put("/:id", async (req, res) => {
         res.sendStatus(404)
         return
     } else {
-        const product = await ProductManager.save(id, body)
+        const product = await productManager.save(id, body)
 
         res.sendStatus(202).send(product)
     }

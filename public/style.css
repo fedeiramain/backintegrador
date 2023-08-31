@@ -65,6 +65,11 @@ a {
     color: white;
 }
 
+.this-user {
+    color: green;
+    text-transform: uppercase;
+}
+
 .this-page {
     font-size: 40px;
     color: black;
@@ -202,5 +207,33 @@ button {
     font-size: 40px;
 }
 
+.session {
+    margin-inline: 10%;
+}
+
+.session-title {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: blue;
+    font-size: 30px;
+}
+
+.session-form {
+    width: 40%;
+    border: gray solid 2px;
+}
+
+.session-btn {
+    width: 30%;
+    height: 20%;
+}
+
+.btn-form {
+    font-size: 25px;
+}
+
+.btn-form:hover {
+    cursor: pointer;
+}
 
 

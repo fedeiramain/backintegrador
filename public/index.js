@@ -7,5 +7,3 @@ socket.on('event', (res)=> {
 
     socket.emit('event', "hola Back")
 })
-
-
