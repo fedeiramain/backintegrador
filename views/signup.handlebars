@@ -1,0 +1,66 @@
+<div>
+  <h3>Inicia sesion</h3>
+  <form action="" method="post">
+
+    <div>
+      <div>
+        <input name="firstname" type="text" placeholder="Nombre">
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <input name="lastname" type="text" placeholder="Apellido">
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <input name="email" type="text" placeholder="Email">
+      </div>
+    </div>
+
+    <div>
+      <div >
+        <input name="age" type="text" placeholder="Edad">
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <select name="gender" aria-label="Select">
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="password" class="uk-input" type="password" placeholder="Contraseña">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="password2" class="uk-input" type="password" placeholder="Confirma Contraseña">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <span>Ya tienes cuenta? <a href="/login">Inicia sesion!</a></span>
+      </div>
+    </div>
+    
+    {{#if error}}
+      <div class="uk-margin">
+        <div class="uk-inline">
+          <span class="uk-form-danger">{{error}}</span>
+        </div>
+      </div>
+    {{/if}}
+
+    <button class="uk-button uk-button-default">Registrarte</button>
+  </form>
+</div>

@@ -3,6 +3,8 @@
     <div class="show-pages">
     {{#if info.hasPrevPage}}
     <a href={{info.prevLink}} class="prev-page">Anterior</a>
+    {{else}}
+    <span></span>
     {{/if}}
     <span class="this-page"> {{info.page}}</span>
     {{#if info.hasNextPage}}

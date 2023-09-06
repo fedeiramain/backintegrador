@@ -8,11 +8,11 @@ const inputElement = document.querySelector('#input')
 const appendMsg = (user, time, msg) => {
   const div = document.createElement('div')
   div.classList.add('uk-width-1-1')
-  div.innerHTML = 
-  `<h3 class="user">${user} <span class="time">${time}</span></h3>
+  div.innerHTML =
+    `<h3 class="user">${user} <span class="time">${time}</span></h3>
   <p class="msg">${msg}</p>
   `
-  
+
   chatRoom.appendChild(div)
 }
 
@@ -33,30 +33,33 @@ socket.on('chat-messages', (messages) => {
 
 })
 
-// Swal.fire({
-//   title: 'Ingresa tu nombre',
-//   input: 'text',
-//   inputAttributes: {
-//     autocapitalize: 'off'
-//   },
-//   confirmButtonText: 'Enviar',
-//   preConfirm: (username) => {
-//     if (!username) {
-//       Swal.showValidationMessage(
-//         `El usuario no puede estar en blanco`
-//       )
-//       return
-//     }
-    
-//     return username
-//   },
-//   allowOutsideClick: false
-// }).then(({ value }) => {
-  const cookies = parseCookies()
+// const cookie = parseCookies()
 
-  if(cookies.user) {
-    console.log(cookies.user)
-  username = cookies.user
+// if(cookie.user) {
+//   console.log(cookie.user)
+//   // username = cookie.user.name
+// }
+
+Swal.fire({
+  title: 'Ingresa tu nombre',
+  input: 'text',
+  inputAttributes: {
+    autocapitalize: 'off'
+  },
+  confirmButtonText: 'Enviar',
+  preConfirm: (username) => {
+    if (!username) {
+      Swal.showValidationMessage(
+        `El usuario no puede estar en blanco`
+      )
+      return
+    }
+
+    return username
+  },
+  allowOutsideClick: false
+}).then(({ value }) => {
+  username = value
   socket.emit('user', { user: username })
 
   for (const { user, datetime, text } of currentMessages) {
@@ -92,18 +95,23 @@ socket.on('chat-messages', (messages) => {
     target.value = ""
     appendMsg(username, fecha.toLocaleTimeString('en-US'), value)
   })
-}
+})
+
+// const todasCookie = document.cookie
+
+// console.log(todasCookie)
 
 
-function parseCookies() {
-  // user=lalo; apellido=ramos
-  return document.cookie
-    .split(';')
-    .reduce((obj, cookie) => {
-      const keyValue = cookie.split('=')
-      return {
-        ...obj,
-        [keyValue[0].trim()]: keyValue[1]
-      }
-    }, {})
-}
+// function parseCookies() {
+//   // user=lalo; apellido=ramos
+  
+//   return document.cookie
+//     .split(';')
+//     .reduce((obj, cookie) => {
+//       const keyValue = cookie.split('=')
+//       return {
+//         ...obj,
+//         [keyValue[0].trim()]: keyValue[1]
+//       }
+//     }, {})
+// }

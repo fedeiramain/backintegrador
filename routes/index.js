@@ -14,7 +14,7 @@ const CartManager = require('../managers/CartManager')
 
 
 home.get('/', async (req, res) => {
-    const { page } = req.query;
+    const { page = 1 } = req.query;
     const user = req.session.user;
     const { docs, ...info} = await prodMng.getAllPaged(page);
    
@@ -93,6 +93,10 @@ home.post('/login', (req, res)=> {
         } 
     })
     
+})
+
+home.get('/logout', (req, res)=> {
+    res.render('logout')
 })
 
 home.get('/cart', async (req, res)=> {

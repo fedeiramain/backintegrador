@@ -3,7 +3,7 @@ const productsModel = require('../models/product.model')
 
 class ProductManager {
 
-    async getAllPaged(page) {
+    async getAllPaged(page = 1) {
         const products = await productsModel.paginate({}, { limit: 4, page, lean: true })
 
         return products
@@ -17,7 +17,7 @@ class ProductManager {
     }
 
     async getById(id) {
-        const product = await productsModel.findOne({ _id: id })
+        const product = await productsModel.findOne({ _id: id }).populate('products', 'title')
 
         return product
     }

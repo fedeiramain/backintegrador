@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="../../static/style.css">
-  </head>
-  <body>
-    <nav>
-      <ul class="menu">
-        <li class="menu-item"><a href="/?page=1">Productos</a></li>
-        {{#if user}}
-        <li class="menu-item"><a href="/chats">Chat</a></li>
-        <li class="menu-item">Hola <span class="this-user">{{user.name}}</span></li>
-        <li class="menu-item"><a href="/cart">Cart</a></li>
-        {{else}}
-        <li class="menu-item"><a href="/login">Login</a></li>
-        {{/if}}
-      </ul>
-    </nav>
-    <main>
-       {{{body}}}
-    </main>
- 
-    <script src="socket.io/socket.io.js"></script>
-    <script src="./static/index.js"></script>
-    <script src="../static/chat.js"></script>
-    <script src="../static/products.js"></script>
-  </body>
+
+<head>
+  <link rel="stylesheet" href="../../static/style.css">
+</head>
+
+<body>
+  <nav>
+    <ul class="menu">
+      <li class="menu-item"><a href="/">Productos</a></li>
+      {{#if user}}
+      <li class="menu-item"><a href="/chats">Chat</a></li>
+      <li class="menu-item">Hola <span class="this-user">{{user.name}}</span></li>
+      <li class="menu-item"><a href="/logout">Logout</a></li>
+      <li class="menu-item"><a href="/cart">Cart</a></li>
+      {{else}}
+      <li class="menu-item"><a href="/login">Login</a></li>
+      {{/if}}
+    </ul>
+  </nav>
+  <main>
+    {{{body}}}
+  </main>
+
+  <script src="socket.io/socket.io.js"></script>
+  <script src="./static/index.js"></script>
+  <script src="../static/chat.js"></script>
+  <script src="../static/products.js"></script>
+</body>
+
 </html>

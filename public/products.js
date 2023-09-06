@@ -31,3 +31,4 @@ const inCart = ({title, price}) => {
 socket.on('inCart', ({ title, price })=> {
   inCart({title, price})
 })
+

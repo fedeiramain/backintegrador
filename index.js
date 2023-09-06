@@ -41,10 +41,10 @@
 
         app.use(cookieParser('esunsecreto'))
        
-        app.use((req, res, next)=> {
-            res.cookie()
-            next()
-        })
+        // app.use((req, res, next)=> {
+        //     res.cookie()
+        //     next()
+        // })
         app.use(session({
             secret:'esunsecreto',
             resave: true,
